@@ -11,9 +11,15 @@
   </div>-->
   <div style="text-align: center">
     <button
-      @click="options.src = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'"
+      @click="options.src = 'http://krtxplay1.setrtmp.com/live/SSAC-235125-DFBCE.m3u8'"
     >{{ options.src }}</button>
-    <videoPlay ref="video" style="display: inline-block; width: 100%" v-bind="options" />
+    <videoPlay ref="video" style="display: inline-block; width: 100%" v-bind="options" v-if="state.show"/>
+    <button
+      @click="state.show = false"
+    >hide video</button>
+    <button
+      @click="state.show = true"
+    >show video</button>
   </div>
 </template>
 
@@ -21,13 +27,17 @@
 import { reactive, ref, nextTick } from "vue";
 import { videoPlay } from "../lib/index.js";
 
+const state = reactive({
+  show: true,
+})
+
 const options = reactive({
   width: "800px",
   height: "450px",
   color: "#409eff",
   muted: false, //静音
   webFullScreen: false,
-  autoPlay: false, //自动播放
+  autoPlay: true, //自动播放
   currentTime: 0,
   loop: false, //循环播放
   mirror: false, //镜像画面
@@ -36,7 +46,7 @@ const options = reactive({
   control: true, //是否显示控制器
   title: "", //视频名称
   type: "m3u8",
-  src: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", //视频源
+  src: "http://krtxplay1.setrtmp.com/live/SSAC-235125-DFBCE.m3u8", //视频源
   // src: "https://cdn.jsdelivr.net/gh/xdlumia/files/video-play/IronMan.mp4", //视频源
   // src: "https://logos-channel.scaleengine.net/logos-channel/live/biblescreen-ad-free/playlist.m3u8", //视频源
   poster: "https://cdn.jsdelivr.net/gh/xdlumia/files/video-play/ironMan.jpg", //封面

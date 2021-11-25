@@ -240,7 +240,8 @@ import {
   onMounted,
   useAttrs,
   watch,
-  nextTick
+  nextTick,
+  onBeforeUnmount,
 } from "vue";
 import { debounce } from "throttle-debounce";
 import Hls2 from "hls.js";
@@ -295,6 +296,7 @@ const state = reactive({
   progressCursorTime: "00:00:00", //进度条光标时间
   qualityLevels: [], //分辨率数组
   currentLevel: 0, //首选分辨率
+  Hls,
 });
 const compose =
   (...args) =>
@@ -575,6 +577,11 @@ onMounted(() => {
   state.dVideo = refdVideo;
   inputFocusHandle();
 });
+onBeforeUnmount(() => {
+  state.dVideo.pause()
+  state.Hls.destroy()
+  state.Hls = null;
+})
 defineExpose({
   play: playHandle, //播放
   pause: pauseHandle, //暂停
