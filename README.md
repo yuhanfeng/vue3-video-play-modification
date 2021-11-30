@@ -14,7 +14,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/google/skia.svg?style=flat-square)](https://github.com/xdlumia/vue3-video-play)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/xdlumia/vue3-video-play)
 
-[![NPM](https://nodei.co/npm/vue3-video-play.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/vue3-video-play)
+[![NPM](https://nodei.co/npm/vue3-video-play-emiyagm.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/vue3-video-play-emiyagm)
 
 <span style="color:#cb3837"> **必须使用 vue@3.2.2及以上版本**</span>
 
@@ -376,3 +376,7 @@ vue3-video-play 支持 video 原生所有事件 [video 默认事件](https://seg
 # 点个 start
 
 [vue3-video-play](https://github.com/xdlumia/vue3-video-play)
+
+# 补充修改说明
+
+原组件在观看m3u8直播时，销毁组件后，不会停止 hls 的解析，特此进行补充修改
