@@ -15,10 +15,10 @@
     >{{ options.src }}</button>
     <videoPlay ref="video" style="display: inline-block; width: 100%" v-bind="options" v-if="state.show"/>
     <button
-      @click="state.show = false"
+      @click="hide"
     >hide video</button>
     <button
-      @click="state.show = true"
+      @click="show"
     >show video</button>
   </div>
 </template>
@@ -46,7 +46,7 @@ const options = reactive({
   control: true, //是否显示控制器
   title: "", //视频名称
   type: "m3u8",
-  src: "http://krtxplay1.setrtmp.com/live/SSAC-235125-DFBCE.m3u8", //视频源
+  src: "http://113.121.231.37:18000/hls/34020000002000000001_37140000011327534560_0400004560/playlist.m3u8", //视频源
   // src: "https://cdn.jsdelivr.net/gh/xdlumia/files/video-play/IronMan.mp4", //视频源
   // src: "https://logos-channel.scaleengine.net/logos-channel/live/biblescreen-ad-free/playlist.m3u8", //视频源
   poster: "https://cdn.jsdelivr.net/gh/xdlumia/files/video-play/ironMan.jpg", //封面
@@ -61,11 +61,19 @@ const options = reactive({
     "fullScreen",
   ],
 });
-const video = ref(null);
+const video = ref();
 
-nextTick(() => {
-  console.log(video.value);
-});
+function hide(){
+  state.show = false
+  options.src = ""
+  video.value.dispose()
+  // console.log(video.value)
+}
+
+function show(){
+  state.show = true
+  options.src = "http://113.121.231.37:18000/hls/34020000002000000001_37140000011327534560_0400004560/playlist.m3u8"
+}
 </script>
 
 <style scoped>

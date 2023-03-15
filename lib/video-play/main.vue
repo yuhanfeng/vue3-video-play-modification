@@ -85,11 +85,11 @@
     />
     <!-- 预加载动画 -->
     <d-loading :loadType="state.loadStateType" />
-    <d-contextmenu />
+    <!-- <d-contextmenu /> -->
     <!-- PC端播放按钮控制器  移动端调用自带控制器-->
     <div class="d-player-control" ref="refPlayerControl" v-if="!isMobile && state.control">
       <div class="d-control-progress">
-        <d-slider
+        <!-- <d-slider
           class="d-progress-bar"
           @onMousemove="onProgressMove"
           @change="progressBarChange"
@@ -97,7 +97,7 @@
           :hoverText="state.progressCursorTime"
           v-model="state.playProgress"
           :preload="state.preloadBar"
-        ></d-slider>
+        ></d-slider> -->
       </div>
 
       <div class="d-control-tool" @click="inputFocusHandle">
@@ -260,7 +260,7 @@ import {
   isMobile,
   firstUpperCase,
 } from "../utils/util";
-const Hls = new Hls2({ fragLoadingTimeOut: 2000 });
+let Hls ;
 import { videoEmits, defineProps } from "./plugins/index";
 const props = defineProps(defineProps); //props
 const emits = defineEmits([
@@ -539,6 +539,7 @@ const init = (): void => {
   }
   // // 使用hls解码
   else if (Hls2.isSupported()) {
+    Hls = new Hls2({ fragLoadingTimeOut: 2000 })
     Hls.detachMedia(); //解除绑定
     Hls.attachMedia(state.dVideo);
     Hls.on(Hls2.Events.MEDIA_ATTACHED, () => {
@@ -569,23 +570,27 @@ const init = (): void => {
 
 watch(() => props.src, () => {
   nextTick(() => {
-    // 初始化
-    init()
+    if(props.src){
+      init()
+    }
   })
 }, { immediate: true })
 onMounted(() => {
   state.dVideo = refdVideo;
   inputFocusHandle();
 });
-onBeforeUnmount(() => {
+
+// 销毁组件
+const dispose = (val) => {
   state.dVideo.pause()
-  state.Hls.destroy()
-  state.Hls = null;
-})
+  Hls.destroy()
+  Hls = null
+};
 defineExpose({
   play: playHandle, //播放
   pause: pauseHandle, //暂停
   togglePlay, //暂停或播放
+  dispose
 });
 </script>
 
